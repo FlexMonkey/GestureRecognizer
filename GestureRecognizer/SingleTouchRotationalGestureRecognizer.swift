@@ -27,6 +27,11 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
         super.init(target: target, action: action)
     }
     
+    override public func numberOfTouches() -> Int
+    {
+        return 1
+    }
+    
     // MARK: Getters
     
     func getRotatationDirection() -> RotatationDirection?
