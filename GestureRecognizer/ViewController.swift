@@ -34,7 +34,7 @@ class ViewController: UIViewController
         {
             view.layer.addSublayer(touchOverlay)
             
-            if let centre = gestureRecogniser.getCentrePoint()
+            if let centre = gestureRecogniser.getAveragePoint()
             {
                 touchOverlay.frame = CGRect(origin: centre , size: CGSizeZero)
                 touchOverlay.drawTouchOverlay(0)
@@ -44,7 +44,7 @@ class ViewController: UIViewController
         {
             if let angle = gestureRecogniser.getCurrentAngle()?.toRadians()
             {
-                if let centre = gestureRecogniser.getCentrePoint()
+                if let centre = gestureRecogniser.getAveragePoint()
                 {
                     touchOverlay.frame = CGRect(origin: centre , size: CGSizeZero)
                 }
@@ -53,7 +53,7 @@ class ViewController: UIViewController
                 touchOverlay.transform = rotateTransform
                 rotatingSquare.transform = rotateTransform
                 
-                let distance = Int(gestureRecogniser.getDistanceFromCentre() ?? 0)
+                let distance = Int(gestureRecogniser.getDistanceFromAverage() ?? 0)
                 touchOverlay.drawTouchOverlay(distance)
                 rotatingSquare.drawSqure(distance)
                 

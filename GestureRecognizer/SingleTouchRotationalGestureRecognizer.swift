@@ -18,7 +18,7 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
     private var rotatationDirection: RotatationDirection?
     private var currentAngle: Float?
     private var averagePoint: CGPoint?
-    private var distanceFromCentre: Float?
+    private var distanceFromAverage: Float?
     
     // MARK: Initialise
     
@@ -46,14 +46,14 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
         }
     }
     
-    func getCentrePoint() -> CGPoint?
+    func getAveragePoint() -> CGPoint?
     {
         return averagePoint
     }
     
-    func getDistanceFromCentre() -> Float?
+    func getDistanceFromAverage() -> Float?
     {
-        return distanceFromCentre
+        return distanceFromAverage
     }
     
     
@@ -111,7 +111,7 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
                 
                 currentAngle = gestureAngle
                 
-                distanceFromCentre = currentPoint.distance(averagePoint!)
+                distanceFromAverage = currentPoint.distance(averagePoint!)
                 
                 state = UIGestureRecognizerState.Changed
             }
@@ -124,7 +124,7 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
         
         rotatationDirection = nil
         currentAngle = nil
-        distanceFromCentre = nil
+        distanceFromAverage = nil
         touchPoints.removeAll(keepCapacity: false)
         
         state = UIGestureRecognizerState.Ended
