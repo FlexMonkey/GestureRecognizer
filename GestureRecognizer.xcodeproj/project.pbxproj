@@ -14,6 +14,8 @@
 		3EF1B4981AA641F800A977D0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3EF1B4961AA641F800A977D0 /* LaunchScreen.xib */; };
 		3EF1B4A41AA641F800A977D0 /* GestureRecognizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF1B4A31AA641F800A977D0 /* GestureRecognizerTests.swift */; };
 		3EF1B4B01AA6426600A977D0 /* SingleTouchRotationalGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF1B4AF1AA6426600A977D0 /* SingleTouchRotationalGestureRecognizer.swift */; };
+		3EF1B4B31AA6D45A00A977D0 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF1B4B21AA6D45A00A977D0 /* Extensions.swift */; };
+		3EF1B4B61AA7903200A977D0 /* ShapeWidgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF1B4B51AA7903200A977D0 /* ShapeWidgets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +41,8 @@
 		3EF1B4A31AA641F800A977D0 /* GestureRecognizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureRecognizerTests.swift; sourceTree = "<group>"; };
 		3EF1B4AD1AA6421000A977D0 /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
 		3EF1B4AF1AA6426600A977D0 /* SingleTouchRotationalGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleTouchRotationalGestureRecognizer.swift; sourceTree = "<group>"; };
+		3EF1B4B21AA6D45A00A977D0 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		3EF1B4B51AA7903200A977D0 /* ShapeWidgets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeWidgets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 		3EF1B48A1AA641F800A977D0 /* GestureRecognizer */ = {
 			isa = PBXGroup;
 			children = (
+				3EF1B4B41AA78F9900A977D0 /* shapeWidgets */,
+				3EF1B4B11AA6D44700A977D0 /* utilities */,
 				3EF1B4AE1AA6423800A977D0 /* singleTouchRotationalGestureRecognizer */,
 				3EF1B48D1AA641F800A977D0 /* AppDelegate.swift */,
 				3EF1B48F1AA641F800A977D0 /* ViewController.swift */,
@@ -123,6 +129,22 @@
 				3EF1B4AF1AA6426600A977D0 /* SingleTouchRotationalGestureRecognizer.swift */,
 			);
 			name = singleTouchRotationalGestureRecognizer;
+			sourceTree = "<group>";
+		};
+		3EF1B4B11AA6D44700A977D0 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				3EF1B4B21AA6D45A00A977D0 /* Extensions.swift */,
+			);
+			name = utilities;
+			sourceTree = "<group>";
+		};
+		3EF1B4B41AA78F9900A977D0 /* shapeWidgets */ = {
+			isa = PBXGroup;
+			children = (
+				3EF1B4B51AA7903200A977D0 /* ShapeWidgets.swift */,
+			);
+			name = shapeWidgets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,8 +248,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3EF1B4B01AA6426600A977D0 /* SingleTouchRotationalGestureRecognizer.swift in Sources */,
+				3EF1B4B61AA7903200A977D0 /* ShapeWidgets.swift in Sources */,
 				3EF1B4901AA641F800A977D0 /* ViewController.swift in Sources */,
 				3EF1B48E1AA641F800A977D0 /* AppDelegate.swift in Sources */,
+				3EF1B4B31AA6D45A00A977D0 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

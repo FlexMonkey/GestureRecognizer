@@ -11,37 +11,70 @@ import UIKit
 
 class ViewController: UIViewController
 {
-    let uiview = UIView()
+    let touchOverlay = TouchOverlay()
+    let rotatingSquare = Square()
+    let clockwiseAntiClockwiseLabel = UILabel(frame: CGRectZero)
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        uiview.backgroundColor = UIColor.blackColor()
-        view.addSubview(uiview)
+        view.layer.addSublayer(rotatingSquare)
+        
+        clockwiseAntiClockwiseLabel.textAlignment = NSTextAlignment.Center
+        view.addSubview(clockwiseAntiClockwiseLabel)
         
         let gestureRecogniser = SingleTouchRotationalGestureRecognizer(target: self, action: "rotateHandler:")
-        
         view.addGestureRecognizer(gestureRecogniser)
     }
     
     func rotateHandler(gestureRecogniser : SingleTouchRotationalGestureRecognizer)
     {
-        println("\(gestureRecogniser.getRotatationDirection()?.rawValue)")
-        println("\(gestureRecogniser.getDistanceFromCentre())")
-        println("\(gestureRecogniser.getCurrentAngle())")
-        println("--------")
-        
-        uiview.frame = CGRect(x: 100, y: 100, width: 50, height: 50)
-        
-        if let angle = gestureRecogniser.getCurrentAngle()
+        if gestureRecogniser.state == UIGestureRecognizerState.Began
         {
-            let transform = CGAffineTransformMakeRotation(CGFloat(angle / Float(180.0 / M_PI)))
-
-            uiview.transform = transform
+            view.layer.addSublayer(touchOverlay)
+            
+            if let centre = gestureRecogniser.getCentrePoint()
+            {
+                touchOverlay.frame = CGRect(origin: centre , size: CGSizeZero)
+                touchOverlay.drawTouchOverlay(0)
+            }
+        }
+        else if gestureRecogniser.state == UIGestureRecognizerState.Changed
+        {
+            if let angle = gestureRecogniser.getCurrentAngle()?.toRadians()
+            {
+                if let centre = gestureRecogniser.getCentrePoint()
+                {
+                    touchOverlay.frame = CGRect(origin: centre , size: CGSizeZero)
+                }
+                
+                let rotateTransform = CATransform3DMakeRotation(CGFloat(angle), 0, 0, 1)
+                touchOverlay.transform = rotateTransform
+                rotatingSquare.transform = rotateTransform
+                
+                let distance = Int(gestureRecogniser.getDistanceFromCentre() ?? 0)
+                touchOverlay.drawTouchOverlay(distance)
+                rotatingSquare.drawSqure(distance)
+                
+                clockwiseAntiClockwiseLabel.text = gestureRecogniser.getRotatationDirection()?.rawValue
+                
+                println("angle = \(angle.toDegrees().description)")
+            }
+        }
+        else // Ended, Cacelled or Failed...
+        {
+            touchOverlay.removeFromSuperlayer()
+            clockwiseAntiClockwiseLabel.text = ""
         }
     }
     
+    override func viewDidLayoutSubviews()
+    {
+        rotatingSquare.frame = CGRect(x: view.frame.width / 2, y: view.frame.height / 2, width: 0, height: 0)
+        
+        clockwiseAntiClockwiseLabel.frame = CGRect(x: 0, y: topLayoutGuide.length, width: view.frame.width, height: 40)
+    }
     
     override func didReceiveMemoryWarning()
     {
@@ -51,6 +84,4 @@ class ViewController: UIViewController
     
     
 }
-
-
 

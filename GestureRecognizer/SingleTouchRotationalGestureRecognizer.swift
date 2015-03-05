@@ -12,7 +12,7 @@ import UIKit
 
 public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
 {
-    private var touchePoints: [CGPoint] = [CGPoint]()
+    private var touchPoints: [CGPoint] = [CGPoint]()
     private var gestureAngle: Float = 0
     
     private var rotatationDirection: RotatationDirection?
@@ -36,7 +36,14 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
     
     func getCurrentAngle() -> Float?
     {
-        return currentAngle
+        if let currentAngle = currentAngle
+        {
+            return currentAngle + 180
+        }
+        else
+        {
+            return nil
+        }
     }
     
     func getCentrePoint() -> CGPoint?
@@ -59,7 +66,9 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
         let touch = touches.anyObject() as UITouch
         let currentPoint = touch.locationInView(self.view)
         
-        touchePoints = [currentPoint]
+        averagePoint = currentPoint
+        
+        touchPoints = [currentPoint]
         
         state = UIGestureRecognizerState.Began
     }
@@ -70,7 +79,7 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
         
         let touch = touches.anyObject() as UITouch
         let currentPoint = touch.locationInView(self.view)
-        let previousPoint = touchePoints.last ?? CGPointZero
+        let previousPoint = touchPoints.last ?? CGPointZero
         
         let distance = currentPoint.distance(previousPoint)
         
@@ -80,20 +89,21 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
             
             let lastGestureAngle:Float = gestureAngle
             
-            touchePoints.append(currentPoint)
+            touchPoints.append(currentPoint)
             
-            for touchPoint in touchePoints
+            for touchPoint in touchPoints
             {
                 averagePoint!.x += touchPoint.x
                 averagePoint!.y += touchPoint.y
             }
             
-            averagePoint!.x = averagePoint!.x / CGFloat(touchePoints.count)
-            averagePoint!.y = averagePoint!.y / CGFloat(touchePoints.count)
+            let touchPointsCount = CGFloat(touchPoints.count)
+            averagePoint!.x = averagePoint!.x / touchPointsCount
+            averagePoint!.y = averagePoint!.y / touchPointsCount
             
             let dx = Float(averagePoint!.x - currentPoint.x)
             let dy = Float(averagePoint!.y - currentPoint.y)
-            gestureAngle = atan2(dy, dx) * Float(180.0 / M_PI)
+            gestureAngle = atan2(dy, dx).toDegrees()
             
             if(abs(gestureAngle - lastGestureAngle) < 45)
             {
@@ -105,7 +115,6 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
                 
                 state = UIGestureRecognizerState.Changed
             }
-            
         }
     }
     
@@ -116,25 +125,16 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
         rotatationDirection = nil
         currentAngle = nil
         distanceFromCentre = nil
+        touchPoints.removeAll(keepCapacity: false)
         
         state = UIGestureRecognizerState.Ended
     }
     
 }
 
-enum RotatationDirection: Int
+enum RotatationDirection: String
 {
-    case AntiClockwise = -1
-    case Clockwise = 1
+    case AntiClockwise = "Anti-Clockwise"
+    case Clockwise = "Clockwise"
 }
 
-extension CGPoint
-{
-    func distance(otherPoint: CGPoint) -> Float
-    {
-        let xSquare = Float((self.x - otherPoint.x) * (self.x - otherPoint.x))
-        let ySquare = Float((self.y - otherPoint.y) * (self.y - otherPoint.y))
-        
-        return sqrt(xSquare + ySquare)
-    }
-}
