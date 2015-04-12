@@ -64,11 +64,11 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
     
     // MARK: Touch handlers
     
-    override public func touchesBegan(touches: NSSet!, withEvent event: UIEvent!)
+    override public func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent!)
     {
         super.touchesBegan(touches, withEvent: event)
         
-        let touch = touches.anyObject() as UITouch
+        let touch = touches.first as! UITouch
         let currentPoint = touch.locationInView(self.view)
         
         averagePoint = currentPoint
@@ -78,11 +78,11 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
         state = UIGestureRecognizerState.Began
     }
     
-    override public func touchesMoved(touches: NSSet!, withEvent event: UIEvent!)
+    override public func touchesMoved(touches: Set<NSObject>!, withEvent event: UIEvent!)
     {
         super.touchesMoved(touches, withEvent: event)
         
-        let touch = touches.anyObject() as UITouch
+        let touch = touches.first as! UITouch
         let currentPoint = touch.locationInView(self.view)
         let previousPoint = touchPoints.last ?? CGPointZero
         
@@ -123,7 +123,7 @@ public class SingleTouchRotationalGestureRecognizer: UIGestureRecognizer
         }
     }
     
-    public override func touchesEnded(touches: NSSet!, withEvent event: UIEvent!)
+    public override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent!)
     {
         super.touchesEnded(touches, withEvent: event)
         
